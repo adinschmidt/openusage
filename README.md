@@ -3,7 +3,12 @@
 Track your AI coding subscriptions from the macOS menu bar.
 
 OpenUsage shows how much of each AI plan you've used: session and weekly limits, credits, and
-balances, all in one panel. The limits closest to running out sit right in the menu bar.
+balances, all in one panel. This fork keeps up to two limits per account beside one menu-bar icon,
+always showing percentages left. Pin limits to select them, or use the first two visible limits.
+
+Build the personal app with `BUNDLE_ID=com.robinebers.openusage ./script/build_and_run.sh build`.
+The bundle in `dist/OpenUsage.app` uses the installed app's accounts and settings and has no update
+feed. Copy it to `/Applications` to install. Homebrew and the downloads below install upstream instead.
 
 | | Light | Dark |
 | --- | --- | --- |
@@ -48,7 +53,7 @@ files, or logs. See [Accounts](docs/accounts.md). Coming from 0.7.x? See
 
 ## Features
 
-- **Menu bar.** The limits closest to running out, at a glance.
+- **Menu bar.** Compact, persistent provider icons with percentages left, or the original Priority strip.
 - **Priority.** What's running low, what's used up, and which accounts need you.
 - **All Usage.** Every account and limit in one place, with resets, your pace, and an optional mark
   where an even pace would be.

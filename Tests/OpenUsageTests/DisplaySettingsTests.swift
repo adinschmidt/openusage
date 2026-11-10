@@ -74,6 +74,7 @@ final class DisplaySettingsTests: QuietWindowTestCase {
     private func showSettings(_ tab: SettingsTab) -> (AppContainer, NSWindow, NSView) {
         let defaults = isolatedDefaults()
         let container = AppContainer.forTesting(accounts: AccountStore(defaults: defaults, vault: InMemoryCredentialVault()), defaults: defaults)
+        container.dataStore.compactProviderIcons = false
         container.popover.screen = .settings
         container.popover.settingsTab = tab
         let settings = SettingsScreen()

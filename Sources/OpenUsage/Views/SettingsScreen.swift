@@ -93,12 +93,19 @@ struct SettingsScreen: View {
     private var displayTab: some View {
         @Bindable var dataStore = dataStore
         Section {
-            PriorityIconsPreview()
-            picker("Max Items In Menu Bar", selection: $dataStore.menuBarLimit, options: MenuBarLimit.allCases.map { ($0, $0.label) })
-            Toggle(isOn: $dataStore.menuBarAlwaysShows) {
-                titled("Always Show In Menu Bar", info: "Show icons in the menu bar even if not requiring your attention yet")
+            Toggle("Compact Provider Icons", isOn: $dataStore.compactProviderIcons)
+            if dataStore.compactProviderIcons {
+                Text("Always show up to two limits per account as percentages left. Pin limits to choose them, or use the first two visible limits in account order.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            } else {
+                PriorityIconsPreview()
+                picker("Max Items In Menu Bar", selection: $dataStore.menuBarLimit, options: MenuBarLimit.allCases.map { ($0, $0.label) })
+                Toggle(isOn: $dataStore.menuBarAlwaysShows) {
+                    titled("Always Show In Menu Bar", info: "Show icons in the menu bar even if not requiring your attention yet")
+                }
+                .disabled(dataStore.menuBarLimit == .iconOnly)
             }
-            .disabled(dataStore.menuBarLimit == .iconOnly)
         } header: {
             Text("Priority")
         }

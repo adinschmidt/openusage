@@ -79,11 +79,11 @@ private struct MenuBarTextStrip: View {
 
     var body: some View {
         HStack(spacing: 11) {
-            ForEach(content.items) { item in
+            ForEach(content.groups) { group in
                 HStack(spacing: 4) {
-                    glyph(item.provider.icon)
+                    glyph(group.provider.icon)
                         .overlay(alignment: .bottomTrailing) {
-                            if let badge = item.provider.badge {
+                            if let badge = group.provider.badge {
                                 AccountBadge(text: badge)
                                     .offset(x: AccountBadge.overhang.width, y: AccountBadge.overhang.height)
                             }
@@ -91,9 +91,23 @@ private struct MenuBarTextStrip: View {
                         .compositingGroup()
                         // The renderer draws only inside layout bounds, so reserve the badge's overhang
                         // (vertically on both sides, keeping the mark centred on its values) or it is cut off.
-                        .padding(.trailing, item.provider.badge == nil ? 0 : AccountBadge.overhang.width)
-                        .padding(.vertical, item.provider.badge == nil ? 0 : AccountBadge.overhang.height)
-                    labelledValue(item)
+                        .padding(.trailing, group.provider.badge == nil ? 0 : AccountBadge.overhang.width)
+                        .padding(.vertical, group.provider.badge == nil ? 0 : AccountBadge.overhang.height)
+                    if content.groupsByAccount {
+                        VStack(alignment: .leading, spacing: -2) {
+                            ForEach(group.items) { item in
+                                HStack(spacing: 3) {
+                                    Text(item.shortLabel)
+                                        .font(.system(size: 9, weight: .medium))
+                                    Text(item.value)
+                                        .font(.system(size: group.items.count == 1 ? 11 : 9, weight: .semibold))
+                                }
+                            }
+                        }
+                        .fixedSize()
+                    } else {
+                        labelledValue(group.items[0])
+                    }
                 }
             }
             if content.overflow > 0 {

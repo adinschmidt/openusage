@@ -15,6 +15,7 @@ final class WidgetDataStore {
     private static let resetDisplayModeKey = "resetDisplayMode"
     private static let menuBarLimitKey = "menuBarLimit"
     private static let menuBarAlwaysShowsKey = "menuBarAlwaysShows"
+    private static let compactProviderIconsKey = "compactProviderIcons"
     private static let priorityWarningKey = "priorityWarning"
     private static let priorityCriticalKey = "priorityCritical"
     private static let priorityBurningFastKey = "priorityBurningFast"
@@ -42,6 +43,10 @@ final class WidgetDataStore {
 
     var menuBarLimit: MenuBarLimit {
         didSet { defaults.set(menuBarLimit.rawValue, forKey: Self.menuBarLimitKey) }
+    }
+
+    var compactProviderIcons: Bool {
+        didSet { defaults.set(compactProviderIcons, forKey: Self.compactProviderIconsKey) }
     }
 
     /// The menu bar lists every Priority section in the tab's order instead of only what's running out.
@@ -98,6 +103,7 @@ final class WidgetDataStore {
         self.resetDisplayMode = defaults.enumValue(forKey: Self.resetDisplayModeKey, default: .relative)
         self.menuBarLimit = defaults.enumValue(forKey: Self.menuBarLimitKey, default: .upToThree)
         self.menuBarAlwaysShows = defaults.bool(forKey: Self.menuBarAlwaysShowsKey)
+        self.compactProviderIcons = defaults.object(forKey: Self.compactProviderIconsKey) as? Bool ?? true
         self.priorityLimits = PriorityLimits(
             warning: defaults.object(forKey: Self.priorityWarningKey) as? Int ?? PriorityLimits.standard.warning,
             critical: defaults.object(forKey: Self.priorityCriticalKey) as? Int ?? PriorityLimits.standard.critical

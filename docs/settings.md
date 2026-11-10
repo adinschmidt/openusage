@@ -11,6 +11,10 @@ Alerts, and Advanced. Changes apply at once. Hover the ⓘ beside a setting to s
 
 ## Priority
 
+- **Compact Provider Icons.** On by default in this fork. Always shows up to two limits per account
+  beside one icon, as percentages left. Pin limits to choose them; otherwise the first two visible
+  limits show in their saved order. The menu-bar item cap and Always Show setting below apply only
+  with compact icons off. The dashboard's Show Usage As setting does not change compact percentages.
 - **Max Items In Menu Bar.** App Icon Only, or Up to 1 through Up to 5 limits, closest to running out
   first. Others show as a count, like `+7`. The default is Up to 3. See [Menu bar](menu-bar.md).
 - **Always Show In Menu Bar.** The menu bar lists everything Priority does, in its order: Pinned,

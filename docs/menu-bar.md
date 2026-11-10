@@ -1,5 +1,15 @@
 # Menu bar
 
+**Compact Provider Icons** is on by default in this fork. Each account with visible bounded metrics
+gets one icon and up to two stacked limits, always showing percentages left in the saved account and
+metric order. Pin limits to select them for that account; otherwise its first two visible limits
+show. Extra pins after the first two do not show. Limits stay visible regardless of urgency and there
+is no five-item cap. Accounts without any visible bounded metrics keep their icon with a dash
+instead of a percentage.
+Privacy Mode still hides the strip during screen sharing or recording.
+
+Turn Compact Provider Icons off in Settings → Display for the upstream behavior described below.
+
 The strip shows the limits closest to running out, or with Always Show In Menu Bar everything
 Priority lists.
 
