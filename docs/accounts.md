@@ -39,6 +39,9 @@ its right-click menu. Return saves and Esc cancels.
 
 ## Hide, pin, and order metrics
 
+Turn **Show In Menu Bar** off on an account's page to hide only its menu-bar icon and values.
+Its dashboard metrics, refreshes, and notifications stay enabled. The choice is saved per account.
+
 An account's page has a switch, a pin, and a drag handle for each metric. See
 [Hiding, pinning, and ordering metrics](dashboard.md#hiding-pinning-and-ordering-metrics).
 

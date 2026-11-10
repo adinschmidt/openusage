@@ -207,7 +207,7 @@ final class StatusItemController: NSObject {
             let compact = container.dataStore.compactProviderIcons
             let limit = container.hideFromScreenShare.isConcealing ? .iconOnly : container.dataStore.menuBarLimit
             let hidden = container.hideFromScreenShare.isConcealing || (!compact && limit == .iconOnly)
-            let accounts = hidden ? [] : container.dataStore.accounts(in: container.layout.displayGroups)
+            let accounts = hidden ? [] : container.dataStore.menuBarAccounts(in: container.layout.displayGroups)
             return (accounts, container.layout.state.priorityPinIDs, container.dataStore.burningFast, container.dataStore.showsUseItOrLoseIt,
                     limit, container.dataStore.menuBarAlwaysShows, compact, updater.availableUpdateVersion != nil)
         } onChange: { [weak self] in

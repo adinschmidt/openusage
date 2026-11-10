@@ -43,8 +43,11 @@ final class AccountMetricSettingsTests: QuietWindowTestCase {
                 .environment(container.dataStore)
         )
         let switches = Self.switches(in: host)
-        XCTAssertEqual(switches.count, metrics.count, "every metric of the account has its own switch")
-        switches[1].performClick(nil)
+        XCTAssertEqual(switches.count, metrics.count + 1, "the account's menu-bar switch precedes its metric switches")
+        switches[0].performClick(nil)
+        try await waitUntil { container.dataStore.menuBarHiddenAccountIDs.contains(id) }
+        XCTAssertTrue(container.layout.isMetricShown(metrics[0]), "hiding the account in the menu bar keeps its dashboard metrics")
+        switches[2].performClick(nil)
 
         try await waitUntil { !container.layout.isMetricShown(metrics[1]) }
         XCTAssertFalse(container.layout.visibleDescriptors.map(\.id).contains(metrics[1]))

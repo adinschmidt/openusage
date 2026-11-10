@@ -8,6 +8,9 @@ is no five-item cap. Accounts without any visible bounded metrics keep their ico
 instead of a percentage.
 Privacy Mode still hides the strip during screen sharing or recording.
 
+An account's **Show In Menu Bar** switch hides that account from either menu-bar mode. Its dashboard
+metrics, refreshes, and notifications stay enabled.
+
 Turn Compact Provider Icons off in Settings → Display for the upstream behavior described below.
 
 The strip shows the limits closest to running out, or with Always Show In Menu Bar everything

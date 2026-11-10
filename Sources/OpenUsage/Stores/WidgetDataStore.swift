@@ -16,6 +16,7 @@ final class WidgetDataStore {
     private static let menuBarLimitKey = "menuBarLimit"
     private static let menuBarAlwaysShowsKey = "menuBarAlwaysShows"
     private static let compactProviderIconsKey = "compactProviderIcons"
+    private static let menuBarHiddenAccountIDsKey = "menuBarHiddenAccountIDs"
     private static let priorityWarningKey = "priorityWarning"
     private static let priorityCriticalKey = "priorityCritical"
     private static let priorityBurningFastKey = "priorityBurningFast"
@@ -47,6 +48,10 @@ final class WidgetDataStore {
 
     var compactProviderIcons: Bool {
         didSet { defaults.set(compactProviderIcons, forKey: Self.compactProviderIconsKey) }
+    }
+
+    var menuBarHiddenAccountIDs: Set<String> {
+        didSet { defaults.set(menuBarHiddenAccountIDs.sorted(), forKey: Self.menuBarHiddenAccountIDsKey) }
     }
 
     /// The menu bar lists every Priority section in the tab's order instead of only what's running out.
@@ -104,6 +109,7 @@ final class WidgetDataStore {
         self.menuBarLimit = defaults.enumValue(forKey: Self.menuBarLimitKey, default: .upToThree)
         self.menuBarAlwaysShows = defaults.bool(forKey: Self.menuBarAlwaysShowsKey)
         self.compactProviderIcons = defaults.object(forKey: Self.compactProviderIconsKey) as? Bool ?? true
+        self.menuBarHiddenAccountIDs = Set(defaults.stringArray(forKey: Self.menuBarHiddenAccountIDsKey) ?? [])
         self.priorityLimits = PriorityLimits(
             warning: defaults.object(forKey: Self.priorityWarningKey) as? Int ?? PriorityLimits.standard.warning,
             critical: defaults.object(forKey: Self.priorityCriticalKey) as? Int ?? PriorityLimits.standard.critical
@@ -316,6 +322,10 @@ final class WidgetDataStore {
     /// The accounts with their lines, in the order the dashboard shows them.
     func accounts(in groups: [ProviderMetrics]) -> [DashboardAccount] {
         families(in: groups).flatMap(\.accounts)
+    }
+
+    func menuBarAccounts(in groups: [ProviderMetrics]) -> [DashboardAccount] {
+        accounts(in: groups).filter { !menuBarHiddenAccountIDs.contains($0.id) }
     }
 
     func families(in groups: [ProviderMetrics]) -> [DashboardFamily] {

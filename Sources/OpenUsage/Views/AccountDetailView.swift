@@ -17,6 +17,18 @@ struct AccountDetailView: View {
     var body: some View {
         if let provider = layout.provider(id: providerID) {
             VStack(alignment: .leading, spacing: PanelMetrics.sectionSpacing) {
+                Toggle("Show In Menu Bar", isOn: Binding(
+                    get: { !dataStore.menuBarHiddenAccountIDs.contains(providerID) },
+                    set: { shown in
+                        if shown { dataStore.menuBarHiddenAccountIDs.remove(providerID) }
+                        else { dataStore.menuBarHiddenAccountIDs.insert(providerID) }
+                    }
+                ))
+                .toggleStyle(.switch)
+                .controlSize(.small)
+                .padding(.horizontal, 12)
+                .padding(.vertical, PanelMetrics.controlRowPadding)
+                .cardSurface()
                 if let host = provider.hubHost {
                     metricsCard
                     infoRow(icon: CLIProxyHub.markID, "Managed by \(host)")

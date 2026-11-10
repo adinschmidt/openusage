@@ -96,12 +96,8 @@ private struct MenuBarTextStrip: View {
                     if content.groupsByAccount {
                         VStack(alignment: .leading, spacing: -2) {
                             ForEach(group.items) { item in
-                                HStack(spacing: 3) {
-                                    Text(item.shortLabel)
-                                        .font(.system(size: 9, weight: .medium))
-                                    Text(item.value)
-                                        .font(.system(size: group.items.count == 1 ? 11 : 9, weight: .semibold))
-                                }
+                                Text(item.value)
+                                    .font(.system(size: group.items.count == 1 ? 11 : 9, weight: .semibold))
                             }
                         }
                         .fixedSize()
