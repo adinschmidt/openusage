@@ -16,6 +16,10 @@ struct DashboardContentView: View {
     var body: some View {
         PopoverScrollView {
             VStack(alignment: .leading, spacing: 0) {
+                if let notice = popover.startupNotice {
+                    ProblemCard(message: notice)
+                        .padding(.bottom, PanelMetrics.sectionSpacing)
+                }
                 // A pending update found by a scheduled Sparkle check tops everything: it's the reminder
                 // the buried Sparkle window can't deliver for a dockless app.
                 if let updateVersion = updater.availableUpdateVersion {
@@ -45,15 +49,10 @@ struct DashboardContentView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 22)
         } else {
-            switch popover.dashboardTab {
-            case .priority:
-                PriorityDashboardView()
-            case .allUsage:
-                WidgetGroupedListView(
-                    reorderSpaceName: reorderSpaceName,
-                    reorderLift: $reorderLift
-                )
-            }
+            WidgetGroupedListView(
+                reorderSpaceName: reorderSpaceName,
+                reorderLift: $reorderLift
+            )
         }
     }
 }

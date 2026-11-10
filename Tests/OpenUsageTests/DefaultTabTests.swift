@@ -3,15 +3,15 @@ import XCTest
 
 @MainActor
 final class DefaultTabTests: XCTestCase {
-    func testColdLaunchAndReopenUseTheDefaultEvenAfterAnotherTabWasSelected() {
+    func testColdLaunchAndReopenAlwaysUseAllUsageIncludingAnOldPriorityPreference() {
         let defaults = isolatedDefaults()
         let popover = PopoverState()
 
         popover.show(dashboardTab: .allUsage)
         popover.show(dashboardTab: .preferred(in: defaults))
-        XCTAssertEqual(popover.dashboardTab, .priority)
+        XCTAssertEqual(popover.dashboardTab, .allUsage)
 
-        defaults.set(DashboardTab.allUsage.rawValue, forKey: DashboardTab.defaultKey)
+        defaults.set(DashboardTab.priority.rawValue, forKey: DashboardTab.defaultKey)
         popover.dashboardTab = .priority
         popover.show(dashboardTab: .preferred(in: defaults))
         XCTAssertEqual(popover.dashboardTab, .allUsage)

@@ -32,8 +32,12 @@ enum CredentialVaultError: LocalizedError {
 }
 
 struct KeychainCredentialVault: CredentialVault {
-    static let service = "com.robinebers.openusage.accounts"
-    private let items = KeychainItems(service: service)
+    static let service = PersonalAppIdentity.keychainPrefix + ".accounts"
+    private let items: KeychainItems
+
+    init(service: String = Self.service) {
+        items = KeychainItems(service: service)
+    }
 
     func load(_ id: UUID) throws -> AccountCredential? {
         try items.load(id).map { try JSONDecoder().decode(AccountCredential.self, from: $0) }

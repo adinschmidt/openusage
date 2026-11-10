@@ -11,7 +11,6 @@ struct SettingsScreen: View {
     @Environment(UpdaterController.self) private var updater
     @AppStorage(AppearanceSetting.key) private var appearance = AppearanceSetting.system
     @AppStorage(TimeFormatSetting.key) private var timeFormat = TimeFormatSetting.auto
-    @AppStorage(DashboardTab.defaultKey) private var defaultTab = DashboardTab.priority
     @AppStorage(PaceMilestone.critical.settingKey) private var criticalAlert = false
     @AppStorage(PaceMilestone.warning.settingKey) private var warningAlert = false
     @AppStorage(PaceMilestone.closeToRunningOut.settingKey) private var closeToRunningOut = false
@@ -59,7 +58,6 @@ struct SettingsScreen: View {
                 get: { launchAtLogin.isEnabled },
                 set: { launchAtLogin.update(to: $0) }
             ))
-            picker("Default Tab", selection: $defaultTab, options: DashboardTab.allCases.map { ($0, $0.label) })
             LabeledContent("Global Shortcut") {
                 KeyboardShortcuts.Recorder(for: .togglePopover)
                     .disabled(popover.screen != .settings)
@@ -69,7 +67,6 @@ struct SettingsScreen: View {
                 SettingsNote(errorMessage)
             }
         }
-        .onChange(of: defaultTab) { _, newValue in popover.dashboardTab = newValue }
         updatesSection
     }
 
@@ -107,7 +104,7 @@ struct SettingsScreen: View {
                 .disabled(dataStore.menuBarLimit == .iconOnly)
             }
         } header: {
-            Text("Priority")
+            Text("Menu Bar")
         }
         Section {
             levelPicker("Warning", info: "When a limit turns into a priority", severity: .warning,

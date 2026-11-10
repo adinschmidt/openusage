@@ -7,7 +7,6 @@ struct PopoverFooter: View {
     @Environment(WidgetDataStore.self) private var dataStore
     @Environment(LayoutStore.self) private var layout
     @Environment(UpdaterController.self) private var updater
-    @Environment(\.colorScheme) private var colorScheme
     let screen: PopoverScreen
 
     @ViewBuilder
@@ -20,7 +19,6 @@ struct PopoverFooter: View {
                     DemoDataLabel()
                     #endif
                     Spacer(minLength: 8)
-                    if popover.dashboardTab == .priority, liveBoard.hasRows { copyPriorityButton }
                     optionsMenu
                 }
                 .padding(.horizontal, 4)
@@ -54,28 +52,6 @@ struct PopoverFooter: View {
         .controlSize(.large)
     }
 
-    private var liveBoard: PriorityBoard {
-        dataStore.priorityBoard(in: layout.displayGroups, pinned: layout.state.priorityPinIDs, now: Date(), hidingEmails: !container.hideFromScreenShare.isEnabled)
-    }
-
-    /// Copies the Priority tab as a picture. It reads the live board when clicked.
-    private var copyPriorityButton: some View {
-        Button {
-            guard ShareCardRenderer.copy(PriorityShareCard(
-                board: liveBoard, now: Date(), appearance: colorScheme, blursAccountNames: container.hideFromScreenShare.isEnabled
-            ), named: "priority") else { return }
-            popover.shareNotice.present(true)
-        } label: {
-            Image(systemName: "doc.on.doc")
-                .font(.system(size: 12, weight: .semibold))
-                .frame(width: 26, height: 26)
-                .background(Theme.controlFill, in: Circle())
-                .contentShape(Circle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel("Copy Priority Screenshot")
-    }
-
     /// The Options pull-down behind a round button. Check for Updates… stays listed on every build and
     /// disables itself while Sparkle can't check: a dev build with no feed, or a check already running.
     /// Accounts and Settings carry their key equivalents
@@ -102,7 +78,7 @@ struct PopoverFooter: View {
 
             Divider()
 
-            Link(destination: URL(string: "https://github.com/robinebers/openusage/issues/new/choose")!) {
+            Link(destination: URL(string: "https://github.com/adinschmidt/openusage/issues/new/choose")!) {
                 Label("Report an Issue…", systemImage: "ladybug")
             }
 

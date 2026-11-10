@@ -33,7 +33,7 @@ final class AppBundleLocatorTests: XCTestCase {
             executableURL: FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID().uuidString)/openusage")
         )
 
-        XCTAssertEqual(located.bundleIdentifier, "com.robinebers.openusage")
+        XCTAssertEqual(located.bundleIdentifier, "com.adinschmidt.openusage")
         XCTAssertNil(located.version)
     }
 }

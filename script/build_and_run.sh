@@ -5,9 +5,9 @@ set -euo pipefail
 # to /Applications. The dev build:
 #   - is signed with a stable Apple Development identity, so keychain/permission grants stick across
 #     rebuilds (macOS keys those to the signing identity + bundle id, not the install location);
-#   - uses its own bundle id (com.robinebers.openusage.dev), so it never touches the real installed
+#   - uses its own bundle id (com.adinschmidt.openusage.dev), so it never touches the real installed
 #     app's settings or keychain. To run against the real app's data instead, set BUNDLE_ID to
-#     com.robinebers.openusage below;
+#     com.adinschmidt.openusage below;
 #   - ships no Sparkle feed, so it never checks for or installs updates (test updates with a real
 #     signed + notarized release build — that's the only honest way).
 #   - includes the development-only Sample Data switch and a signed sibling demo app. Production
@@ -16,17 +16,17 @@ set -euo pipefail
 # Usage: script/build_and_run.sh [run|build|logs|verify]
 # Env:   CODESIGN_IDENTITY  override signing identity (exact name or hash)
 #        CONFIG             "release" (default) or "debug"
-#        BUNDLE_ID          defaults to com.robinebers.openusage.dev; other identities omit demo code
+#        BUNDLE_ID          defaults to com.adinschmidt.openusage.dev; other identities omit demo code
 
 MODE="${1:-run}"
 CONFIG="${CONFIG:-release}"
 
 TARGET_NAME="OpenUsage"                 # SwiftPM target / binary name
 APP_DISPLAY="OpenUsage"                 # user-facing app name
-BUNDLE_ID="${BUNDLE_ID:-com.robinebers.openusage.dev}"
-DEMO_BUNDLE_ID="com.robinebers.openusage.dev.demo"
+BUNDLE_ID="${BUNDLE_ID:-com.adinschmidt.openusage.dev}"
+DEMO_BUNDLE_ID="com.adinschmidt.openusage.dev.demo"
 DEVELOPMENT_BUILD=false
-[ "$BUNDLE_ID" = "com.robinebers.openusage.dev" ] && DEVELOPMENT_BUILD=true
+[ "$BUNDLE_ID" = "com.adinschmidt.openusage.dev" ] && DEVELOPMENT_BUILD=true
 MIN_SYSTEM_VERSION="15.0"
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

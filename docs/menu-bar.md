@@ -13,16 +13,15 @@ metrics, refreshes, and notifications stay enabled.
 
 Turn Compact Provider Icons off in Settings → Display for the upstream behavior described below.
 
-The strip shows the limits closest to running out, or with Always Show In Menu Bar everything
-Priority lists.
+The alternate strip shows limits closest to running out, with pins and other limits included when
+Always Show In Menu Bar is on.
 
 - Left-click the icon to open the panel. Right-click (or control-click) it for **Settings** and
   **Quit OpenUsage**.
-- The strip shows the top limits of the dashboard's [Running Out](dashboard.md#priority) list, up to
-  **Settings → Display → Priority → Max Items In Menu Bar** (3 by default).
-- With **Always Show In Menu Bar** on (off by default), it lists everything Priority does, in its
-  order: Pinned, Running Out, Use It or Lose It, then Used Up. A pinned limit shows once, where
-  Priority lists it.
+- The alternate strip shows limits running low, up to
+  **Settings → Display → Menu Bar → Max Items In Menu Bar** (3 by default).
+- With **Always Show In Menu Bar** on (off by default), the alternate strip lists pinned limits,
+  limits running out, limits resetting mostly unused, then used-up limits. Each limit shows once.
 - Each limit shows the provider's mark, a short name, and its value. An account can appear more than once.
 - Limits past that number show as a count, like `+7`. Used Up limits never count. With Always Show
   In Menu Bar off, only limits running out show or count.

@@ -6,8 +6,8 @@ import Observation
 @MainActor
 @Observable
 final class DevelopmentDataMode {
-    static let normalBundleID = "com.robinebers.openusage.dev"
-    static let demoBundleID = "com.robinebers.openusage.dev.demo"
+    static let normalBundleID = "com.adinschmidt.openusage.dev"
+    static let demoBundleID = "com.adinschmidt.openusage.dev.demo"
 
     let isAvailable: Bool
     let isOn: Bool

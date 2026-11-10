@@ -59,8 +59,9 @@ account from a CLIProxyAPI hub, remove the login on the hub or remove the whole 
 ## Where things are stored
 
 Account names and the dashboard layout live in the app's preferences. Tokens and keys live in the
-app's own Keychain services. OpenUsage never reads other tools' credentials, files, Keychain items,
-databases, or environment variables.
+app's own Keychain services under `com.adinschmidt.openusage`. The one-time import reads the previous
+OpenUsage app's account credentials and leaves them untouched. OpenUsage never reads coding tools'
+credentials, files, Keychain items, databases, or environment variables.
 
 ## Sign in again
 

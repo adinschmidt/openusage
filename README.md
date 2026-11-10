@@ -7,13 +7,15 @@ balances, all in one panel. This fork keeps up to two limits per account beside 
 always showing percentages left. Pin limits to select them, or use the first two visible limits.
 Each account's **Show In Menu Bar** switch hides only its menu-bar icon and values.
 
-Build the personal app with `BUNDLE_ID=com.robinebers.openusage ./script/build_and_run.sh build`.
-The bundle in `dist/OpenUsage.app` uses the installed app's accounts and settings and has no update
-feed. Copy it to `/Applications` to install. Homebrew and the downloads below install upstream instead.
+Build the personal app with `BUNDLE_ID=com.adinschmidt.openusage ./script/build_and_run.sh build`.
+The bundle in `dist/OpenUsage.app` has its own app identity, preferences, and Keychain storage, with
+no update feed. On its first launch it copies the previous OpenUsage accounts and settings once.
+macOS may request permission to read each old sign-in. A refused copy is not retried on later launches;
+sign in again from that account's page instead. The old credentials are never deleted.
+Copy the app to `/Applications` to install. Homebrew and the downloads below install upstream instead.
 
 | | Light | Dark |
 | --- | --- | --- |
-| **Priority** | <img src="assets/priority-light.jpg" alt="OpenUsage Priority tab in light mode, with pinned limits, limits running out, and a used-up limit" width="400"> | <img src="assets/priority-dark.jpg" alt="OpenUsage Priority tab in dark mode, with pinned limits, limits running out, and a used-up limit" width="400"> |
 | **All Usage** | <img src="assets/all-usage-light.jpg" alt="OpenUsage All Usage tab in light mode, with Claude, ChatGPT, and Cursor usage" width="400"> | <img src="assets/all-usage-dark.jpg" alt="OpenUsage All Usage tab in dark mode, with Claude, ChatGPT, and Cursor usage" width="400"> |
 
 ## Installation
@@ -28,7 +30,7 @@ feed. Copy it to `/Applications` to install. Homebrew and the downloads below in
   [releases page](https://github.com/robinebers/openusage/releases/latest), open it, and drag
   OpenUsage to your Applications folder.
 
-The app updates itself with signed, notarized [Sparkle](docs/updates.md) updates. Requires macOS 15
+Upstream downloads use [Sparkle](docs/updates.md) updates. Personal builds have no update feed. Requires macOS 15
 (Sequoia) or later, on Apple Silicon or Intel.
 
 ## Supported Providers
@@ -54,8 +56,7 @@ files, or logs. See [Accounts](docs/accounts.md). Coming from 0.7.x? See
 
 ## Features
 
-- **Menu bar.** Compact, persistent provider icons with percentages left, or the original Priority strip.
-- **Priority.** What's running low, what's used up, and which accounts need you.
+- **Menu bar.** Compact, persistent provider icons with percentages left, or an optional urgency-ranked strip.
 - **All Usage.** Every account and limit in one place, with resets, your pace, and an optional mark
   where an even pace would be.
 - **Your layout.** Pin the metrics you care about, hide the rest with a right-click, and drag

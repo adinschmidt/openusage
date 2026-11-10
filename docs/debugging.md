@@ -7,7 +7,7 @@
 ./script/build_and_run.sh logs     # launch and stream its log lines
 ```
 
-- The dev bundle id is `com.robinebers.openusage.dev`. It keeps its own settings and Keychain items
+- The dev bundle id is `com.adinschmidt.openusage.dev`. It keeps its own settings and Keychain items
   and runs beside an installed OpenUsage.
 - It has no update feed, so the Updates controls are disabled. It leaves alone the OpenRouter and Z.ai
   keys 0.7.x saved.
@@ -27,7 +27,7 @@ demo app. Turn it off to restart the normal dev app with its existing accounts a
 - **Reshuffle**, under Development in the demo app, swaps in a new seed's accounts without a restart.
 - To reproduce a seed, launch the demo with it:
   `open "dist/OpenUsage Demo.app" --args -DemoSeed 4242`.
-- The demo uses `com.robinebers.openusage.dev.demo` and memory-only credential vaults. Its accounts,
+- The demo uses `com.adinschmidt.openusage.dev.demo` and memory-only credential vaults. Its accounts,
   layout, and settings reset at each launch. It never reads or changes the normal dev app's or the
   installed app's accounts, settings, or Keychain items.
 - Usage reads and hub calls are blocked, and telemetry is off. Add Account still runs the provider's

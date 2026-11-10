@@ -32,8 +32,12 @@ extension HubKeyVault {
 }
 
 struct KeychainHubKeyVault: HubKeyVault {
-    static let service = "com.robinebers.openusage.cliproxy-hubs"
-    private let items = KeychainItems(service: service)
+    static let service = PersonalAppIdentity.keychainPrefix + ".cliproxy-hubs"
+    private let items: KeychainItems
+
+    init(service: String = Self.service) {
+        items = KeychainItems(service: service)
+    }
 
     func load(_ hubID: UUID) throws -> HubKey? {
         try items.load(hubID).map { try JSONDecoder().decode(HubKey.self, from: $0) }

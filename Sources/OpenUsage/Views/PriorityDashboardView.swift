@@ -1,31 +1,5 @@
 import SwiftUI
 
-struct PriorityDashboardView: View {
-    @Environment(LayoutStore.self) private var layout
-    @Environment(WidgetDataStore.self) private var dataStore
-    @Environment(PopoverState.self) private var popover
-
-    var body: some View {
-        TimelineView(.periodic(from: .now, by: 30)) { context in
-            PriorityBoardList(
-                board: dataStore.priorityBoard(in: layout.displayGroups, pinned: layout.state.priorityPinIDs, now: context.date),
-                now: context.date,
-                onToggleMeterStyle: { dataStore.meterStyle.toggle() },
-                onToggleResetDisplay: { dataStore.resetDisplayMode.toggle() },
-                onShowAllUsage: { popover.dashboardTab = .allUsage },
-                onFixAccount: { popover.openAccounts($0) },
-                onMetricCommand: { command in
-                    switch command {
-                    case .setPinned(let metricID, let pinned): layout.setMetric(metricID, pinned: pinned)
-                    case .hide(let metricID): layout.setMetric(metricID, shown: false)
-                    default: break
-                    }
-                }
-            )
-        }
-    }
-}
-
 struct PriorityBoardList: View {
     let board: PriorityBoard
     let now: Date

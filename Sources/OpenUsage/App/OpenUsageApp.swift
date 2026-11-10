@@ -40,11 +40,20 @@ public final class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
         #endif
+        Task {
+            let migration = await PersonalAppMigration.onFirstLaunch()
+            startApplication(migration: migration)
+        }
+    }
+
+    private func startApplication(migration: PersonalAppMigration.Outcome) {
         AppearanceSetting.applyCurrent()
         let container = AppContainer(telemetry: PostHogTelemetrySink(), telemetryDefaults: TelemetryRecorder.suite)
         self.container = container
         container.startRefreshing()
-        Task { await APIKeyV1Files.importOnce(into: container.accounts) }
+        if migration.failed > 0 {
+            container.popover.startupNotice = "Some sign-ins could not be copied. Sign in again or replace the key from each affected account's page. The old sign-ins were left untouched."
+        }
         statusItemController = StatusItemController(container: container, updater: updater)
         let launchDurationMS = Int((ProcessInfo.processInfo.systemUptime - processStartedAt) * 1_000)
         AppLog.info(.lifecycle, "launch to status item ready: \(launchDurationMS) ms")

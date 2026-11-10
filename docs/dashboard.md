@@ -1,41 +1,7 @@
 # Dashboard
 
-The panel that opens from the menu bar icon. It has two tabs, Priority and All Usage.
-
-- The menu bar icon and the global shortcut open the Default Tab from Settings (Priority by
-  default). A usage notification opens All Usage.
-- With no accounts, both tabs show **Add Account**.
-- Closing the panel returns it to the dashboard, scrolled to the top.
-
-## Priority
-
-Priority shows only what needs you, most urgent first.
-
-- **Pinned** comes first, with every pinned metric that has data. A pinned metric that's running
-  out moves to Running Out until it recovers, one that's used up moves to Used Up until it resets,
-  and one listed under Use It or Lose It moves there until it resets.
-- **Running Out** lists every limit at or under its Warning level (30% left by default, set in
-  [Settings → Display → Priority](settings.md#priority)). With **Burning Fast** on, it also lists a
-  limit that would run out before it resets at your current pace, however much it has left, with the
-  time it would run out, like `Out in 1h 8m`, in place of its reset. It stays listed until its pace eases to
-  90% of the limit. What would run out soonest at your current pace comes first, then limits with no
-  pace, least left first.
-- **Use It or Lose It** lists, with the setting of that name on, a limit that resets within 24 hours
-  with over 50% left, the same rule as the alert. Only windows longer than a day count, never the
-  5-hour session or a dollar spending cap. Each shows when it resets, like `Resets in 18h`, soonest
-  first. These show in the menu bar only with Always Show In Menu Bar on.
-- **All Clear** shows under Running Out when every account has a current reading and nothing is
-  running low. It waits for accounts that haven't reported yet.
-- **Needs Attention** names an account whose refresh failed or whose provider sent a notice.
-  **Fix** opens the account's page with the reason and how to fix it.
-- **Used Up** always comes last. It lists what has run out, soonest reset first. A balance with no
-  limit, such as Cursor credits, shows here only at exactly zero.
-
-With Pace Marks on, each limit's ring carries the same pace mark as its bar in All Usage, clockwise
-from 12 o'clock.
-
-Ties keep your dashboard order. If no account has a limit to monitor, **No Reported Limits** links
-to All Usage.
+The panel opens directly to All Usage, with every visible account and metric. There is no tab selector
+or default-tab setting. Closing the panel returns it to the dashboard, scrolled to the top.
 
 ## All Usage
 
@@ -83,9 +49,9 @@ Hover over the warning or the clock, or right-click the account, to see why.
 An account's page in **Accounts** lists all of its metrics.
 
 - Turn a metric's switch off, or right-click it on the dashboard and choose **Hide**, to hide it
-  everywhere: All Usage, Priority, the menu bar, and notifications. Hiding a pinned metric unpins it.
-- Click the pin, or right-click the metric on the dashboard and choose **Pin**, to list it under
-  Pinned on Priority. A hidden metric can't be pinned.
+  everywhere: All Usage, the menu bar, and notifications. Hiding a pinned metric unpins it.
+- Click the pin, or right-click the metric on the dashboard and choose **Pin**, to choose it for
+  the compact menu bar. A hidden metric can't be pinned.
 - Drag a metric by its handle to move it within the account.
 - A new account shows every metric, in the provider's order.
 
@@ -134,7 +100,6 @@ cards. **Install Update** opens the update window, and ✕ hides the card until 
 - **OpenUsage** and the version, like `OpenUsage 0.8.0`, sit over **Next update in …**, which counts
   down to the next refresh. Click it or press **⌘R** to refresh now. A dev build shows its commit,
   like `dev (abc1234)`.
-- On Priority, a button copies the tab as a PNG, leaving emails out the same way.
 - The **⋯** menu has **Accounts**, **Settings**, **Check for Updates…**, **Report an Issue…**,
   **About OpenUsage**, and **Quit OpenUsage**.
 

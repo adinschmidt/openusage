@@ -20,12 +20,12 @@ final class MetricPinMenuTests: QuietWindowTestCase {
     }
 
     /// One Claude account with Session at 10% and Weekly used up.
-    private func hostDashboard(tab: DashboardTab, pinning pinned: (Hosted) -> String? = { _ in nil }) throws -> Hosted {
+    private func hostDashboard() throws -> Hosted {
         let defaults = isolatedDefaults()
         let store = AccountStore(defaults: defaults, vault: InMemoryCredentialVault())
         let account = store.add(kind: .claude, label: "Personal", credential: .apiKey("key")).cardID
         let container = AppContainer.forTesting(accounts: store, defaults: defaults)
-        container.popover.dashboardTab = tab
+        container.popover.dashboardTab = .allUsage
         container.dataStore.snapshots[account] = ProviderSnapshot(
             providerID: account, displayName: "Claude", plan: "Ultra",
             lines: [
@@ -52,7 +52,6 @@ final class MetricPinMenuTests: QuietWindowTestCase {
             session: try XCTUnwrap(metrics.first { $0.title == "Session" }).id,
             weekly: try XCTUnwrap(metrics.first { $0.title == "Weekly" }).id
         )
-        if let id = pinned(hosted) { XCTAssertTrue(container.layout.setMetric(id, pinned: true)) }
         return hosted
     }
 
@@ -90,19 +89,11 @@ final class MetricPinMenuTests: QuietWindowTestCase {
         return titles
     }
 
-    /// The menus down the middle of the Priority tab, top to bottom, one per row.
-    private func priorityMenus(in hosted: Hosted) -> [(y: CGFloat, titles: [String])] {
-        stride(from: CGFloat(40), to: hosted.host.bounds.height - 40, by: 8).reduce(into: []) { found, y in
-            let titles = contextMenu(at: CGPoint(x: hosted.host.bounds.midX, y: y), in: hosted)
-            if !titles.isEmpty, found.last?.titles != titles { found.append((y, titles)) }
-        }
-    }
-
     private let accountMenu = ["Refresh", "Rename", "Edit Account…", "", "Share Screenshot"]
 
     func testRightClickingAMetricOnACardPinsOrUnpinsItAndTheAccountNameHasNoPin() async throws {
         try QuietTestProcess.requireFocus()
-        let hosted = try hostDashboard(tab: .allUsage)
+        let hosted = try hostDashboard()
         try await waitUntil { [hosted.account, hosted.session, hosted.weekly].allSatisfy { hosted.frames.byID[$0] != nil } }
         let session = try XCTUnwrap(hosted.frames.byID[hosted.session])
         let row = CGPoint(x: session.midX, y: session.midY)
@@ -121,26 +112,9 @@ final class MetricPinMenuTests: QuietWindowTestCase {
         XCTAssertEqual(contextMenu(at: name, in: hosted), accountMenu, "the account's name has no metric to pin")
     }
 
-    func testRightClickingAPinnedRowOnPriorityUnpinsItAndAnyOtherRowPinsIt() async throws {
-        try QuietTestProcess.requireFocus()
-        let hosted = try hostDashboard(tab: .priority) { $0.session }
-        try await Task.sleep(for: .milliseconds(300))
-
-        let rows = priorityMenus(in: hosted)
-        XCTAssertEqual(rows.map(\.titles), [["Unpin", "Hide"], ["Pin", "Hide"]], "Pinned's Session, then Used Up's Weekly")
-        guard rows.count == 2 else { return }
-
-        XCTAssertEqual(contextMenu(at: CGPoint(x: hosted.host.bounds.midX, y: rows[1].y), in: hosted, choosing: "Pin"), ["Pin", "Hide"])
-        XCTAssertTrue(hosted.layout.isMetricPinned(hosted.weekly))
-        XCTAssertEqual(contextMenu(at: CGPoint(x: hosted.host.bounds.midX, y: rows[0].y), in: hosted, choosing: "Unpin"), ["Unpin", "Hide"])
-        XCTAssertFalse(hosted.layout.isMetricPinned(hosted.session))
-        XCTAssertTrue(hosted.layout.undo(), "⌘Z puts the pin back")
-        XCTAssertTrue(hosted.layout.isMetricPinned(hosted.session))
-    }
-
     func testHideInAMetricsMenuOnACardTurnsItOffAndItsRowLeaves() async throws {
         try QuietTestProcess.requireFocus()
-        let hosted = try hostDashboard(tab: .allUsage)
+        let hosted = try hostDashboard()
         try await waitUntil { [hosted.session, hosted.weekly].allSatisfy { hosted.frames.byID[$0] != nil } }
         let session = try XCTUnwrap(hosted.frames.byID[hosted.session])
 
@@ -151,18 +125,4 @@ final class MetricPinMenuTests: QuietWindowTestCase {
         XCTAssertNotNil(hosted.frames.byID[hosted.weekly])
     }
 
-    func testHideOnAPinnedPriorityRowTurnsItOffAndItsRowLeaves() async throws {
-        try QuietTestProcess.requireFocus()
-        let hosted = try hostDashboard(tab: .priority) { $0.session }
-        try await Task.sleep(for: .milliseconds(300))
-        let rows = priorityMenus(in: hosted)
-        XCTAssertEqual(rows.map(\.titles), [["Unpin", "Hide"], ["Pin", "Hide"]], "Pinned's Session, then Used Up's Weekly")
-        guard rows.count == 2 else { return }
-
-        XCTAssertEqual(contextMenu(at: CGPoint(x: hosted.host.bounds.midX, y: rows[0].y), in: hosted, choosing: "Hide"), ["Unpin", "Hide"])
-        XCTAssertFalse(hosted.layout.isMetricShown(hosted.session))
-        XCTAssertFalse(hosted.layout.isMetricPinned(hosted.session))
-        try await Task.sleep(for: .milliseconds(300))
-        XCTAssertEqual(priorityMenus(in: hosted).map(\.titles), [["Pin", "Hide"]], "only Used Up's Weekly is left")
-    }
 }

@@ -169,7 +169,7 @@ final class APIKeyV1FilesTests: XCTestCase {
         let http = acceptingHTTP()
 
         await APIKeyV1Files.importOnce(
-            into: store, defaults: isolatedDefaults(), home: home, http: http, bundleIdentifier: "com.robinebers.openusage.dev"
+            into: store, defaults: isolatedDefaults(), home: home, http: http, bundleIdentifier: "com.adinschmidt.openusage.dev"
         )
 
         XCTAssertTrue(store.accounts.isEmpty)

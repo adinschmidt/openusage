@@ -1,5 +1,8 @@
 # Updates
 
+Personal builds made with `script/build_and_run.sh` contain no update feed and cannot install upstream
+updates. The release update behavior below applies to upstream distribution builds.
+
 OpenUsage updates itself with [Sparkle](https://sparkle-project.org). It verifies every update before
 installing it.
 

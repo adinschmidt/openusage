@@ -41,6 +41,9 @@ on `gh-pages`). Cut releases with the release-swift skill.
   key-capable `NSPanel`.
 - `AccountStore` persists account metadata. `CredentialVault` stores credentials in the app's own
   Keychain service.
+- The personal bundle is `com.adinschmidt.openusage`. `PersonalAppMigration` is the only one-time
+  exception for reading the previous OpenUsage app's preferences and own Keychain services. It never
+  changes the source credentials or retries a refused prompt on a later launch.
 - Users initiate all provider sign-ins from the popover's Accounts screen. Never discover credentials
   or accounts from other tools, and never read their files, Keychain items, SQLite databases, or
   environment variables.
@@ -83,7 +86,7 @@ every change to a header, to renaming, or to the Options menu, or they rot unsee
 
 There is no hot reload. The app is a long-lived menu-bar process, so **every code change requires a
 full rebuild and restart of the running app** to take effect. The development bundle identifier is
-`com.robinebers.openusage.dev`; it never touches the installed app's settings or Keychain items.
+`com.adinschmidt.openusage.dev`; it never touches the installed app's settings or Keychain items.
 
 ## Pull Requests
 

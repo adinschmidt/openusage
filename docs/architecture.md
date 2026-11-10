@@ -80,8 +80,8 @@ JSON. The command never refreshes and never opens the Keychain.
 
 - `StatusItemController` (`App/StatusItemController.swift`) owns the `NSStatusItem` and the
   `MenuBarPanel` that hosts `DashboardView`.
-- `PriorityBoard` (`Models/PriorityBoard.swift`) ranks accounts for both the Priority tab and the
-  menu bar, so the two always agree.
+- `PriorityBoard` (`Models/PriorityBoard.swift`) ranks accounts for the optional urgency-based
+  menu bar. The dashboard always shows All Usage.
 - `DashboardView` switches between the dashboard (`DashboardContentView`), Accounts
   (`AccountsView`, `AccountListView`, `AccountDetailView`, `HubDetailView`), and
   `SettingsScreen`.

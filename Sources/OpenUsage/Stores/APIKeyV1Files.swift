@@ -4,7 +4,7 @@ import Foundation
 /// once and never changes, so a downgrade to 0.7.x finds them as it left them.
 enum APIKeyV1Files {
     static let importedKey = "openusage.apiKeyFiles.v1.imported"
-    static let developmentBundleIdentifier = "com.robinebers.openusage.dev"
+    static let developmentBundleIdentifier = "com.adinschmidt.openusage.dev"
 
     /// Adds each saved key as an account of a provider that has none yet and that 0.7.x had on, once a usage
     /// read accepts it. A provider is done once its key is saved, refused, or left off, so a key the user

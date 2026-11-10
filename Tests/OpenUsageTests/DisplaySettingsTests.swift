@@ -29,9 +29,9 @@ final class DisplaySettingsTests: QuietWindowTestCase {
         }
         try await waitUntil { headingsAndPickers(in: host).count >= 6 }
         XCTAssertEqual(headingsAndPickers(in: host).prefix(6),
-                       ["Priority", container.dataStore.menuBarLimit.label, "30% left", "10% left",
+                       ["Menu Bar", container.dataStore.menuBarLimit.label, "30% left", "10% left",
                         "Appearance", AppearanceSetting.system.label],
-                       "one Priority heading over the menu bar picker, Warning, and Critical, then Appearance and its Theme picker")
+                       "one Menu Bar heading over the picker, Warning, and Critical, then Appearance and its Theme picker")
         XCTAssertFalse(texts(in: host).contains { $0.hasPrefix("OpenUsage intelligently displays") }, "no note under Priority")
     }
 
